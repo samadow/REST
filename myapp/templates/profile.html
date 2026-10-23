@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Профили ман{% endblock %}
+{% block breadcrumb %}Профили ман{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'myapp/account.css' %}">{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">ФАЗОИ ШАХСИИ ШУМО</div><h1>Салом, {{ user.first_name|default:user.username }}<span class="heading-dot">.</span></h1><p>Маълумоти шахсӣ ва танзимоти ҳисоби худро идора кунед.</p></div><a class="button button-light" href="{% url 'course' %}">Ба курсҳо ↗</a></section>
+<div class="profile-layout">
+  <aside class="profile-card">
+    <span class="profile-avatar" aria-hidden="true">{{ user.username|first|upper }}</span>
+    <h2>{{ user.get_full_name|default:user.username }}</h2>
+    <p class="profile-username">@{{ user.username }}</p>
+    <span class="profile-badge">{% if user.role == 'admin' %}Маъмур{% elif user.role == 'manager' %}Менеҷер{% elif user.role == 'editor' %}Муҳаррир{% else %}Омӯзанда{% endif %}</span>
+    <dl class="profile-details"><div><dt>Санаи бақайдгирӣ</dt><dd>{{ user.date_joined|date:'d.m.Y' }}</dd></div><div><dt>Почтаи электронӣ</dt><dd>{{ user.email|default:'Ҳоло ворид нашудааст' }}</dd></div></dl>
+    <a class="button button-light" href="{% url 'logout' %}">Баромадан ↗</a>
+  </aside>
+  <div class="profile-sections">
+    <section class="form-panel"><div class="panel-heading"><span class="step-badge">01</span><div><h2>Маълумоти шахсӣ</h2><p>Маълумоти худро нав кунед.</p></div></div>
+      <form method="post" class="editor-form" action="{% url 'profile' %}">{% csrf_token %}
+        {% include 'account_fields.html' %}
+        <div class="form-actions"><a class="button button-light" href="{% url 'profile' %}">Бекор кардан</a><button class="button button-dark" type="submit">Нигоҳ доштан ↗</button></div>
+      </form>
+    </section>
+    <section class="profile-security"><div><span class="eyebrow">АМНИЯТИ ҲИСОБ</span><h2>Рамзи шумо</h2><p>Барои ҳисоби худ рамзи қавӣ интихоб кунед.</p></div><a class="button button-light" href="{% url 'password_change' %}">Иваз кардани рамз ↗</a></section>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'auth.html' %}
+{% block title %}Воридшавӣ{% endblock %}
+{% block auth_content %}
+<span class="eyebrow">АЗ ДИДОРИ ШУМО ШОДЕМ</span>
+<h1 id="auth-heading">Хуш омадед<span class="heading-dot">.</span></h1>
+<p class="auth-intro">Барои идомаи омӯзиш ба ҳисоби худ ворид шавед.</p>
+<form method="post" action="{% url 'login' %}" class="auth-form">
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div role="alert">{{ form.non_field_errors }}</div>{% endif %}
+  <div class="field">
+    <label for="id_username">Номи корбар <span>*</span></label>
+    <input id="id_username" name="username" type="text" maxlength="50" autocomplete="username" value="{{ form.username.value|default_if_none:'' }}" required {% if form.username.errors %}aria-invalid="true" aria-describedby="username-errors"{% endif %}>
+    {% if form.username.errors %}<div id="username-errors" role="alert">{{ form.username.errors }}</div>{% endif %}
+  </div>
+  <div class="field">
+    <label for="id_password">Рамз <span>*</span></label>
+    <input id="id_password" name="password" type="password" autocomplete="current-password" required {% if form.password.errors %}aria-invalid="true" aria-describedby="password-errors"{% endif %}>
+    {% if form.password.errors %}<div id="password-errors" role="alert">{{ form.password.errors }}</div>{% endif %}
+  </div>
+  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+  <button class="button button-dark auth-submit" type="submit">Ворид шудан <span>↗</span></button>
+</form>
+<p class="auth-switch">Ҳоло ҳисоб надоред? <a href="{% url 'register' %}">Бақайдгирӣ →</a></p>
+{% endblock %}

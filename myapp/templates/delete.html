@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Ҳазфи курс{% endblock %}
+{% block breadcrumb %}Ҳазфи курс{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'course' %}">← Бозгашт ба курсҳо</a><section class="delete-panel"><div class="danger-icon">×</div><span class="eyebrow">ТАСДИҚИ АМАЛ</span><h1>Курсро ҳазф мекунед?</h1><p>Курси <strong>«{{ course.title }}»</strong> ва ҳамаи дарсҳои он ҳазф мешаванд. Барқарор кардани онҳо имкон надорад.</p><form method="post">{% csrf_token %}<div class="form-actions"><a class="button button-light" href="{% url 'course' %}">Бекор кардан</a><button class="button button-danger" type="submit">Ҳазф кардани курс</button></div></form></section>
+{% endblock %}

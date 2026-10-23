@@ -1,0 +1,29 @@
+{% extends 'auth.html' %}
+{% block title %}Бақайдгирӣ{% endblock %}
+{% block auth_content %}
+<span class="eyebrow">ЯК ОҒОЗИ НАВ</span>
+<h1 id="auth-heading">Ҳисоб созед<span class="heading-dot">.</span></h1>
+<p class="auth-intro">Ба фазои омӯзиши OMUZ хуш омадед.</p>
+<form method="post" action="{% url 'register' %}" class="auth-form">
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div role="alert">{{ form.non_field_errors }}</div>{% endif %}
+  <div class="field">
+    <label for="id_username">Номи корбар <span>*</span></label>
+    <input id="id_username" name="username" type="text" maxlength="50" autocomplete="username" value="{{ form.username.value|default_if_none:'' }}" required {% if form.username.errors %}aria-invalid="true" aria-describedby="username-errors"{% endif %}>
+    {% if form.username.errors %}<div id="username-errors" role="alert">{{ form.username.errors }}</div>{% endif %}
+  </div>
+  <div class="field">
+    <label for="id_password1">Рамз <span>*</span></label>
+    <input id="id_password1" name="password1" type="password" autocomplete="new-password" required aria-describedby="password-help{% if form.password1.errors %} password1-errors{% endif %}" {% if form.password1.errors %}aria-invalid="true"{% endif %}>
+    {% if form.password1.errors %}<div id="password1-errors" role="alert">{{ form.password1.errors }}</div>{% endif %}
+    <div class="auth-help" id="password-help">{{ form.password1.help_text|safe }}</div>
+  </div>
+  <div class="field">
+    <label for="id_password2">Такрори рамз <span>*</span></label>
+    <input id="id_password2" name="password2" type="password" autocomplete="new-password" required {% if form.password2.errors %}aria-invalid="true" aria-describedby="password2-errors"{% endif %}>
+    {% if form.password2.errors %}<div id="password2-errors" role="alert">{{ form.password2.errors }}</div>{% endif %}
+  </div>
+  <button class="button button-dark auth-submit" type="submit">Сохтани ҳисоб <span>↗</span></button>
+</form>
+<p class="auth-switch">Аллакай ҳисоб доред? <a href="{% url 'login' %}">Ворид шавед →</a></p>
+{% endblock %}

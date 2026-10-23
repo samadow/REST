@@ -1,0 +1,21 @@
+{% extends 'auth.html' %}
+{% block title %}Баромадан{% endblock %}
+{% block auth_content %}
+<span class="auth-exit-icon" aria-hidden="true">↗</span>
+{% if user.is_authenticated %}
+<span class="eyebrow">ТО БОЗДИД</span>
+<h1 id="auth-heading">Аз ҳисоб мебароед?</h1>
+<p class="auth-intro"><strong>{{ user.username }}</strong>, барои идомаи омӯзиш метавонед ҳар вақт дубора ворид шавед.</p>
+<form method="post" action="{% url 'logout' %}" class="auth-form">
+  {% csrf_token %}
+  <button class="button button-dark auth-submit" type="submit">Бале, баромадан <span>↗</span></button>
+</form>
+<a class="button button-light auth-cancel" href="{% url 'course' %}">Дар ҳисоб мондан</a>
+{% else %}
+<span class="eyebrow">ТО БОЗДИД</span>
+<h1 id="auth-heading">Шумо аз ҳисоб берунед<span class="heading-dot">.</span></h1>
+<p class="auth-intro">Барои идомаи омӯзиш ба ҳисоби худ ворид шавед.</p>
+<a class="button button-dark auth-submit" href="{% url 'login' %}">Ворид шудан <span>↗</span></a>
+<p class="auth-switch"><a href="{% url 'login' %}">Бозгашт ба воридшавӣ →</a></p>
+{% endif %}
+{% endblock %}
